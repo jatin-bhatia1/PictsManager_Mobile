@@ -3,12 +3,15 @@ package com.example.pictsmanager
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.ByteArrayOutputStream
+
 private const val REQUEST_CODE = 42
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +29,11 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
         if(requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK){
             val takenImage = data?.extras?.get("data") as Bitmap
-            imageView.setImageBitmap(takenImage)
+            val bs = ByteArrayOutputStream()
+            takenImage.compress(Bitmap.CompressFormat.PNG, 50, bs)
+            val intent = Intent(this, EditPicture::class.java)
+            intent.putExtra("picture", bs.toByteArray())
+            startActivity(intent)
         }else{
             super.onActivityResult(requestCode,resultCode,data)
         }

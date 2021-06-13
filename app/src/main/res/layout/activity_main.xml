@@ -16,12 +16,5 @@
         android:layout_marginTop="16dp"
         android:text="@string/take_a_picture" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="16dp"
-        android:src="@mipmap/ic_launcher" />
-
 
 </LinearLayout>
