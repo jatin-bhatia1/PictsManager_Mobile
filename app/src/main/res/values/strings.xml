@@ -2,6 +2,9 @@
     <string name="app_name">PictsManager</string>
     <string name="take_a_picture">Take a picture</string>
     <string name="name">Name</string>
-    <string name="valider">Valider</string>
-    <string name="annuler">Annuler</string>
+    <string name="valider">Valid</string>
+    <string name="annuler">Cancel</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="entrer">Enter</string>
 </resources>
