@@ -2,6 +2,7 @@ package com.example.pictsmanager
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.edit_picture.*
@@ -10,6 +11,8 @@ import kotlinx.android.synthetic.main.edit_picture.*
 class EditPicture : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.edit_picture)
         val codedPicture = intent.getByteArrayExtra("picture")
         if (codedPicture != null) {
