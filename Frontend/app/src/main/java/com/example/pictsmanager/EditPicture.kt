@@ -13,6 +13,7 @@ class EditPicture : AppCompatActivity() {
 
         setContentView(R.layout.edit_picture)
         val codedPicture = intent.getByteArrayExtra("picture")
+
         if (codedPicture != null) {
             imageView.setImageBitmap(BitmapFactory.decodeByteArray(codedPicture,0,codedPicture.size))
         }else{
