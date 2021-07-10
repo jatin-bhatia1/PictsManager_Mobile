@@ -16,10 +16,16 @@ module.exports = (sequelize, DataTypes) => {
         as: 'Image',
         onDelete: 'CASCADE',
       });
+      Album.belongsTo(models.User, {
+        foreignKey: 'UserID',
+        as: 'user',
+        onDelete: 'CASCADE'
+      });
     }
   };
   Album.init({
-    Name: DataTypes.STRING
+    Name: DataTypes.STRING,
+    UserID: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Album',

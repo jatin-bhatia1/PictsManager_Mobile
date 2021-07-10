@@ -9,6 +9,8 @@ const image = require('../controllers/imageController');
 */
 
 router.get('/:user_id', image.getByUser);
+router.get('/album/:album_id', image.getByAlbum);
+router.get('/tag/:tag_id', image.getAllByTag);
 router.post('/:user_id', image.create);
 router.delete('/:user_id/:image_id', image.delete);
 

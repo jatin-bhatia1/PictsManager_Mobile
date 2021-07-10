@@ -7,21 +7,25 @@ module.exports = {
       [
         {
           Name: 'Camera',
+          UserID: 1,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {          
           Name: 'Pictures',
+          UserID: 1,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
           Name: 'Whatsup Images',
+          UserID: 2,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
           Name: 'Instagram Images',
+          UserID: 2,
           createdAt: new Date(),
           updatedAt: new Date()
         },

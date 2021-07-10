@@ -16,10 +16,16 @@ module.exports = (sequelize, DataTypes) => {
         as: 'tag',
         onDelete: 'CASCADE'
       });
+      Tag.belongsTo(models.User, {
+        foreignKey: 'UserID',
+        as: 'user',
+        onDelete: 'CASCADE'
+      });
     }
   };
   Tag.init({
     Name: DataTypes.STRING,
+    UserID: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Tag',

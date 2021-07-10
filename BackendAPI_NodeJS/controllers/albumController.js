@@ -1,10 +1,29 @@
 const { Album, User } = require('../database/models');
 
+// Get all albums by user_id
+exports.getByUser = function (req, res) {
+  let user_id = req.params.user_id;
+
+  if(user_id == null){res.status(400).json({ error: 'missing user Id' });}
+
+  Album.findAll({
+    where: {
+      UserID: user_id,
+    },
+  }).then((albums) => {
+    res.json(albums);
+  })
+  .catch((err) => {
+    res.json({ err });
+  });   
+};
+
 // Save an album
 exports.create = function (req, res) {
     const name = req.body.album.name;
+    const userId = req.body.album.userId;
 
-    if(name == null){res.status(400).json({ error: 'missing album name' });}
+    if(name == null || userId == null){res.status(400).json({ error: 'missing necessary parameteres' });}
   
     Album.findOne({
         where: {

@@ -179,6 +179,46 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GetAllImagesByTagID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{path}}/api/images/tag/2",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"api",
+								"images",
+								"tag",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllImagesByAlbumID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{path}}/api/images/album/2",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"api",
+								"images",
+								"album",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -215,10 +255,107 @@
 				{
 					"name": "DeleteAlbum",
 					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{path}}/api/albums/5",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"api",
+								"albums",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllAlbumsByUserID",
+					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "{{path}}/api/albums/2",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"api",
+								"albums",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tags",
+			"item": [
+				{
+					"name": "GetAllTagsByUserID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{path}}/api/tags/2",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"api",
+								"tags",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateTag",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tag\": {\r\n            \"name\": \"Test Tag\",\r\n            \"userId\": 1\r\n        }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/api/tags",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"api",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTag",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{path}}/api/tags/5",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"api",
+								"tags",
+								"5"
+							]
 						}
 					},
 					"response": []

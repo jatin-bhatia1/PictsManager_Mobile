@@ -1,11 +1,8 @@
-const { Image, User } = require('../database/models');
-const userController = require('../controllers/userController');
+const { Image, User, Rel_Tag_Image } = require('../database/models');
 
-// Get all images by user_id
+// Get all images by UserID
 exports.getByUser = function (req, res) {
   let user_id = req.params.user_id;
-
-  console.log(user_id);
 
   Image.findAll({
     where: {
@@ -18,6 +15,45 @@ exports.getByUser = function (req, res) {
     res.json({ err });
   }); 
   
+};
+
+// Get all images by AlbumID
+exports.getByAlbum = function (req, res) {
+  let album_id = req.params.album_id;
+
+  Image.findAll({
+    where: {
+      AlbumID: album_id,
+    },
+  }).then((images) => {
+    res.json(images);
+  })
+  .catch((err) => {
+    res.json({ err });
+  }); 
+  
+};
+
+// Get images by TagID
+exports.getAllByTag = function (req, res) {
+  const tagID = req.params.tag_id;
+
+  Rel_Tag_Image.findAll({
+    where: {
+      TagID: tagID,
+    },
+    include: [
+      {
+        model: Image,
+        as: 'image',
+      },
+    ],
+  }).then((images) => {
+    res.json(images);
+  })
+    .catch((err) => {
+      res.json({ err });
+    }); 
 };
 
 // Save an image
@@ -38,7 +74,8 @@ exports.create = function (req, res) {
       name == null ||
       type == null ||
       imageString == null ||
-      userId == null
+      userId == null ||
+      albumId == null
     ) {
       res.status(400).json({ error: 'missing fields' });
     }

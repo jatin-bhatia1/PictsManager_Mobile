@@ -8,7 +8,8 @@ const tag = require('../controllers/tagController');
  * http://localhost:4000/api/tags
 */
 
-router.post('/', album.create);
-router.delete('/:tag_id', album.delete);
+router.get('/:user_id', tag.getByUser);
+router.post('/', tag.create);
+router.delete('/:tag_id', tag.delete);
 
 module.exports = router;

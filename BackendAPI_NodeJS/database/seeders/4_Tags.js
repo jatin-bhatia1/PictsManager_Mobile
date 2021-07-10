@@ -3,38 +3,38 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert(
-      'Rel_Tag_Images',
+      'Tags',
       [
         {
-          TagID: 1,
-          ImageID: 9,
+          Name: 'friends',
+          UserID: 1,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {          
+          Name: 'family',
+          UserID: 1,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          TagID: 2,
-          ImageID: 10,
+          Name: 'trip',
+          UserID: 2,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          TagID: 3,
-          ImageID: 11,
+          Name: 'instagram',
+          UserID: 2,
           createdAt: new Date(),
           updatedAt: new Date()
         },
-        {
-          TagID: 4,
-          ImageID: 12,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        }
       ],
       {}
     );
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Rel_Tag_Images', null, {});
+    await queryInterface.bulkDelete('Tags', null, {});
   }
 };
