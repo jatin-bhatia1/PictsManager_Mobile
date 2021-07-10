@@ -2,7 +2,6 @@ package com.example.pictsmanager
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.login.*
@@ -10,7 +9,6 @@ import kotlinx.android.synthetic.main.login.*
 class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.login)
 

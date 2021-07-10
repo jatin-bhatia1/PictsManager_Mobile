@@ -1,11 +1,13 @@
 package com.example.pictsmanager
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.Window
+import android.text.InputType
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,16 +18,38 @@ import java.io.ByteArrayOutputStream
 private const val REQUEST_CODE = 42
 
 class MainActivity : AppCompatActivity() {
+    private val albums : ArrayList<Album> =getListData()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_main)
-        val albums: List<Album> = getListData()
-        recyclerView_album.setAdapter(CustomRecyclerViewAdapter(this, albums))
+        recyclerView_album.adapter = CustomRecyclerViewAdapter(this, albums)
 
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerView_album.setLayoutManager(linearLayoutManager)
+        recyclerView_album.layoutManager = linearLayoutManager
+
+        buttonAddAlbum.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Title")
+            val input = EditText(this)
+            input.inputType = InputType.TYPE_CLASS_TEXT
+            builder.setView(input)
+            builder.setPositiveButton(
+                "OK"
+            ) { dialog, which ->
+                if (!input.text.toString().equals("")) {
+                    albums.add(Album(input.text.toString(), albums.size + 1))
+                } else {
+                    Toast.makeText(this, "Sorry, you can't create a new folder with an empty name", Toast.LENGTH_SHORT).show()
+                }
+            }
+            builder.setNegativeButton(
+                "Cancel"
+            ) { dialog, which -> dialog.cancel() }
+            builder.show()
+        }
+
 
         btnTakePicture.setOnClickListener {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -49,8 +73,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getListData(): List<Album> {
-        val list: MutableList<Album> = ArrayList<Album>()
+    private fun getListData(): ArrayList<Album> {
+        val list: ArrayList<Album> = ArrayList<Album>()
         val album1 = Album("Vietnam", 1)
         val album2 = Album("Vietnam", 2)
         val album3 = Album("Vietnam", 3)
