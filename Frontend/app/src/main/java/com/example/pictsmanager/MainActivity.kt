@@ -14,7 +14,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.pictsmanager.api.ApiClient
+import com.example.pictsmanager.models.Album
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
 
@@ -33,8 +39,13 @@ class MainActivity : AppCompatActivity() {
 
         setUpPermissionsCamera()
 
-        val albums: List<Album> = getListData()
-        recyclerView_album.setAdapter(CustomRecyclerViewAdapter(this, albums))
+        var albums: MutableList<Album>? = executeGetAlbums()
+        if(albums != null){
+            recyclerView_album.adapter = CustomRecyclerViewAdapter(this, albums)
+        }else{
+            albums = getListData()
+            recyclerView_album.adapter = CustomRecyclerViewAdapter(this, albums)
+        }
 
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView_album.layoutManager = linearLayoutManager
@@ -115,17 +126,51 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getListData(): List<Album> {
+    private fun getListData(): MutableList<Album> {
         val list: MutableList<Album> = ArrayList<Album>()
-        val album1 = Album("Vietnam", 1)
-        val album2 = Album("Vietnam", 2)
-        val album3 = Album("Vietnam", 3)
-        val album4 = Album("Vietnam", 4)
+        val album1 = Album("Vietnam", null)
+        val album2 = Album("Vietnam", null)
+        val album3 = Album("Vietnam", null)
+        val album4 = Album("Vietnam", null)
 
         list.add(album1)
         list.add(album2)
         list.add(album3)
         list.add(album4)
         return list
+    }
+
+    private fun executeGetAlbums() = runBlocking {
+        var data: MutableList<Album>? = null
+        val job = launch(Dispatchers.Main) {
+            try {
+                val response = ApiClient.apiService.getListAlbums(userId = 1)
+
+                if (response.isSuccessful && response.body() != null) {
+                    data = response.body()
+                    Toast.makeText(
+                        this@MainActivity,
+                        "data: $data",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Error Occurred: ${response.message()}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Error Occurred: ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+        delay(1300L)
+        job.cancel()
+        return@runBlocking data
     }
 }

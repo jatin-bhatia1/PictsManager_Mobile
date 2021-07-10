@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pictsmanager.models.Album
 
 internal class CustomRecyclerViewAdapter(
     private val context: Context,
@@ -27,7 +28,7 @@ internal class CustomRecyclerViewAdapter(
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
         // Cet country in countries via position
         val album = albums[position]
-        holder.albumNameView.text = album.nameAlbum
+        holder.albumNameView.text = album.Name
     }
 
     override fun getItemCount(): Int {

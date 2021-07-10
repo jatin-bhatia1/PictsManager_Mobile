@@ -1,5 +1,21 @@
 const { Album, User } = require('../database/models');
 
+//Get albums by UserId
+exports.getByUser = function (req, res) {
+  let user_id = req.params.user_id;
+
+  Album.findAll({
+    where: {
+      UserID: user_id,
+    },
+  }).then((albums) => {
+    res.json(albums);
+  })
+  .catch((err) => {
+    res.json({ err });
+  });
+};
+
 // Save an album
 exports.create = function (req, res) {
     const name = req.body.album.name;
@@ -29,7 +45,7 @@ exports.create = function (req, res) {
         .catch((err) => {
           res.status(500).json(err);
         });    
-  };
+};
 
   // Delete an album
 exports.delete = function (req, res) {

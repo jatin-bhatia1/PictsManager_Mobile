@@ -13,13 +13,19 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Album.hasMany(models.Image, {
         foreignKey: 'AlbumID',
-        as: 'Image',
+        as: 'Images',
         onDelete: 'CASCADE',
+      });
+      Album.belongsTo(models.User, {
+        foreignKey: 'UserID',
+        as: 'user',
+        onDelete: 'CASCADE'
       });
     }
   };
   Album.init({
-    Name: DataTypes.STRING
+    Name: DataTypes.STRING,
+    UserID: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Album',
