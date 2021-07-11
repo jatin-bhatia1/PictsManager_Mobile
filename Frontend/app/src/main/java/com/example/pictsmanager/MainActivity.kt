@@ -29,7 +29,7 @@ private const val REQUEST_CODE = 42
 private const val CAMERA_REQUEST_CODE = 1888
 
 class MainActivity : AppCompatActivity() {
-    private val albums : ArrayList<Album> =getListData()
+    private val albums : MutableList<Album> = getListData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                 "OK"
             ) { dialog, which ->
                 if (!input.text.toString().equals("")) {
-                    albums.add(Album(input.text.toString(), albums.size + 1))
+                    albums.add(Album(input.text.toString(), null))
                 } else {
                     Toast.makeText(this, "Sorry, you can't create a new folder with an empty name", Toast.LENGTH_SHORT).show()
                 }
