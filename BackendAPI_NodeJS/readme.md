@@ -9,19 +9,13 @@
 
 - Run `npm install` to download the dependencies
 - Run PostgreSql server
-- Run `createdb -U postgres PictsManager_dev` to create the database
-- Run `sequelize db:migrate` to create or update table from migrations
+- Run `createdb -U postgres PictsManager_dev` to create the database (if this doesn't work, you'll have to create the database yourself, like with pgadmin)
+- Before running sequelize, make sure that the logins in file config.js are good
+- If the sequelize commands doesn't work you'll have to install sequelize-cli : `npm install sequelize-cli`
 - Run `npm start` to start the server and create db associations
-- Run `sequelize db:seed:all` to import default data in tables
+- Run `npx sequelize db:seed:all` to import default data in tables
 
 ## Informations
-- To create PostgreSQL database :
-`createdb -U postgres PictsManager_dev`
-- To create a table :
-`sequelize model:generate --name Tag --attributes Name:String`
-- To create fake data in table :
-`sequelize seed:generate --name User`
-- To remove all tables :
-`sequelize db:migrate:undo:all`
-- To remove all data in tables :
-`sequelize db:seed:undo:all`
+- Mobile application logins : 
+    - username : 'admin@admin.com
+    - password : 'moto1234'
