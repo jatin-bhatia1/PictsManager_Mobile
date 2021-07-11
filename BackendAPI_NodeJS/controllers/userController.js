@@ -64,7 +64,7 @@ exports.login = function (req, res) {
                   maxAge: oneMonth,
                   secure: process.env.NODE_ENV === 'development' ? true : false,
                 })
-                .json({ message: 'user connected' });
+                .json({ user_id: userFound.id });
             } else {
               res.status(500).json({ error: 'Password error' });
             }

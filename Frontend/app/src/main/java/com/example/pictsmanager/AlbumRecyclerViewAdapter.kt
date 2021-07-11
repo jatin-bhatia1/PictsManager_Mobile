@@ -39,7 +39,7 @@ internal class CustomRecyclerViewAdapter(
         val itemPosition = recyclerView.getChildLayoutPosition(itemView)
         val album = albums[itemPosition]
         val intent = Intent(context, ListPicturesActivity::class.java)
-        intent.putExtra("nameAlbum",album.nameAlbum)
+        intent.putExtra("nameAlbum",album.Name)
         context.startActivity(intent)
     }
 

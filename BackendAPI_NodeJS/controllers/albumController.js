@@ -33,6 +33,7 @@ exports.create = function (req, res) {
         .then((albumFound) => {
           if (!albumFound) {
             const newAlbum = Album.create({
+                UserID: userId,
                 Name: name
               })
                 .then((album) => {

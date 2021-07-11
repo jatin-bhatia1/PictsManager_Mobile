@@ -8,7 +8,7 @@ module.exports = {
         {
           FirstName: 'admin',
           LastName: 'admin',
-          Password: '$2a$06$IMYYTt4GQOtcxdJyACik1.qskLjYU0GQRcYpGdYfqxEIDqugb4Nry',          
+          Password: '$2a$10$f/klGeXoqAtQ5YNTcXggueqnjrUKwbBO/rrA7wdw.D6S.A89HemDS',          
           Email: 'admin@admin.com',
           createdAt: new Date(),
           updatedAt: new Date()
@@ -16,7 +16,7 @@ module.exports = {
         {          
           FirstName: 'Romain',
           LastName: 'PIOT',
-          Password: '$2a$06$IMYYTt4GQOtcxdJyACik1.qskLjYU0GQRcYpGdYfqxEIDqugb4Nry',
+          Password: '$2a$10$f/klGeXoqAtQ5YNTcXggueqnjrUKwbBO/rrA7wdw.D6S.A89HemDS',
           Email: 'romainpiot.pro@gmail.com',
           createdAt: new Date(),
           updatedAt: new Date()
@@ -24,7 +24,7 @@ module.exports = {
         {
           FirstName: 'Jatin',
           LastName: 'BBB',
-          Password: '$2a$06$IMYYTt4GQOtcxdJyACik1.qskLjYU0GQRcYpGdYfqxEIDqugb4Nry',          
+          Password: '$2a$10$f/klGeXoqAtQ5YNTcXggueqnjrUKwbBO/rrA7wdw.D6S.A89HemDS',          
           Email: 'jatinb@gmail.com',
           createdAt: new Date(),
           updatedAt: new Date()
@@ -32,7 +32,7 @@ module.exports = {
         {
           FirstName: 'Paul',
           LastName: 'Polochon',
-          Password: '$2a$06$IMYYTt4GQOtcxdJyACik1.qskLjYU0GQRcYpGdYfqxEIDqugb4Nry',          
+          Password: '$2a$10$f/klGeXoqAtQ5YNTcXggueqnjrUKwbBO/rrA7wdw.D6S.A89HemDS',          
           Email: 'popol@gmail.com',
           createdAt: new Date(),
           updatedAt: new Date()

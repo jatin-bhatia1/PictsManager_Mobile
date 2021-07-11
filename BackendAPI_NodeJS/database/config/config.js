@@ -1,9 +1,9 @@
 module.exports = {
     development: {
-      "username": "postgres@countup.tech",
-      "password": "Pass123$",
+      "username": "postgres",
+      "password": "postgres",
       "database": "PictsManager_dev",
-      "host": "localhost:5051",
+      "host": "localhost",
       "dialect": "postgres",
     },
     production: {
