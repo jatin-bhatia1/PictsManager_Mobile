@@ -20,8 +20,8 @@ exports.getByUser = function (req, res) {
 
 // Save an album
 exports.create = function (req, res) {
-    const name = req.body.album.name;
-    const userId = req.body.album.userId;
+    const name = req.body.name;
+    const userId = req.body.userId;
 
     if(name == null || userId == null){res.status(400).json({ error: 'missing necessary parameteres' });}
   
@@ -37,7 +37,7 @@ exports.create = function (req, res) {
                 Name: name
               })
                 .then((album) => {
-                  res.json({ message: 'new album inserted' });
+                  res.json(album);
                 })
                 .catch((err) => {
                   res.json({ err });

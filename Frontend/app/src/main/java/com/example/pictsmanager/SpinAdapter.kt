@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.pictsmanager.models.Album
 
 class SpinAdapter(
     context: Context,
@@ -29,7 +30,7 @@ class SpinAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val label = super.getView(position, convertView, parent) as TextView
         label.setTextColor(Color.BLACK)
-        label.text = values[position].nameAlbum
+        label.text = values[position].Name
 
         return label
     }
@@ -40,7 +41,7 @@ class SpinAdapter(
     ): View {
         val label = super.getDropDownView(position, convertView, parent) as TextView
         label.setTextColor(Color.BLACK)
-        label.text = values[position].nameAlbum
+        label.text = values[position].Name
         return label
     }
 }

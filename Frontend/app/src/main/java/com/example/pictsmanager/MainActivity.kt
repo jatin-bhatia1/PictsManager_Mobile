@@ -20,6 +20,7 @@ import com.example.pictsmanager.api.ApiClient
 import com.example.pictsmanager.api.ApiService
 import com.example.pictsmanager.models.Album
 import com.example.pictsmanager.models.User
+import com.example.pictsmanager.viewmodels.PostAddAlbumViewModel
 import com.example.pictsmanager.viewmodels.PostLoginUserViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
@@ -40,16 +41,14 @@ private const val CAMERA_REQUEST_CODE = 1888
 private const val BASE_URL: String = "http://10.0.2.2:4000/api/"
 
 class MainActivity : AppCompatActivity() {
+    var albums: MutableList<Album>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val user_id  = intent.getIntExtra("user_id", 1)
         setContentView(R.layout.activity_main)
-
-
         setUpPermissionsCamera()
-        var albums: MutableList<Album>? = null
-        val loginResponse =
-            ApiClient.apiService.getListAlbums(user_id)
+
+        val loginResponse = ApiClient.apiService.getListAlbums(user_id)
         loginResponse.enqueue(object : Callback<MutableList<Album>> {
             override fun onResponse(call: Call<MutableList<Album>>, response: Response<MutableList<Album>>) {
                 response.body()
@@ -80,17 +79,12 @@ class MainActivity : AppCompatActivity() {
             builder.setPositiveButton(
                 "OK"
             ) { dialog, which ->
-                for(album in albums){
-                    if (album.isDelete){
-                        albums.remove(album)
-                    }
-                }
+
             }
             builder.setNegativeButton(
                 "Cancel"
             ) { dialog, which -> dialog.cancel() }
             builder.show()
-
         }
 
         buttonAddAlbum.setOnClickListener {
@@ -102,11 +96,48 @@ class MainActivity : AppCompatActivity() {
             builder.setPositiveButton(
                 "OK"
             ) { dialog, which ->
-                if (!input.text.toString().equals("")) {
-                    albums.add(Album(input.text.toString(), albums.size + 1, false))
-                } else {
-                    Toast.makeText(this, "Sorry, you can't create a new folder with an empty name", Toast.LENGTH_SHORT).show()
+                if(!input.text.toString().equals("")){
+                    val addAlbumResponse = ApiClient.apiService.postAddAlbum(PostAddAlbumViewModel(user_id, input.text.toString()))
+                    addAlbumResponse.enqueue(object : Callback<Album> {
+                        override fun onResponse(call: Call<Album>, response: Response<Album>) {
+                            response.body()
+                            if (response.isSuccessful && response.body() != null ) {
+                                val album = response.body()
+                                if(album != null){
+                                    albums?.add(album)
+                                }else{
+                                    Toast.makeText(
+                                        this@MainActivity,
+                                        "Something went wrong",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }else{
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Name is already taken",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Album>, t: Throwable) {
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Something went wrong",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            t.message?.let { Log.e("ERROR:", it) }
+                        }
+                    })
+                }else{
+                    Toast.makeText(
+                        this@MainActivity,
+                        "You have to fill the name",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
+
             }
             builder.setNegativeButton(
                 "Cancel"

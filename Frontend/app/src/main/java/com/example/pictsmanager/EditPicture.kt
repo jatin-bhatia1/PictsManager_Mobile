@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.pictsmanager.models.Album
 import kotlinx.android.synthetic.main.edit_picture.*
 
 
