@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +30,26 @@ class MainActivity : AppCompatActivity() {
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView_album.layoutManager = linearLayoutManager
 
+        button_delete.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Supression")
+            builder.setMessage("Etes vous sûr de supprimer ces dossiers ?")
+            builder.setPositiveButton(
+                "OK"
+            ) { dialog, which ->
+                for(album in albums){
+                    if (album.isDelete){
+                        albums.remove(album)
+                    }
+                }
+            }
+            builder.setNegativeButton(
+                "Cancel"
+            ) { dialog, which -> dialog.cancel() }
+            builder.show()
+
+        }
+
         buttonAddAlbum.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Title")
@@ -39,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                 "OK"
             ) { dialog, which ->
                 if (!input.text.toString().equals("")) {
-                    albums.add(Album(input.text.toString(), albums.size + 1))
+                    albums.add(Album(input.text.toString(), albums.size + 1, false))
                 } else {
                     Toast.makeText(this, "Sorry, you can't create a new folder with an empty name", Toast.LENGTH_SHORT).show()
                 }
@@ -75,15 +96,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun getListData(): ArrayList<Album> {
         val list: ArrayList<Album> = ArrayList<Album>()
-        val album1 = Album("Vietnam", 1)
-        val album2 = Album("Vietnam", 2)
-        val album3 = Album("Vietnam", 3)
-        val album4 = Album("Vietnam", 4)
-
-        list.add(album1)
-        list.add(album2)
-        list.add(album3)
-        list.add(album4)
         return list
     }
 }

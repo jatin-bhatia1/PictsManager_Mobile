@@ -19,15 +19,6 @@ class ListPicturesActivity : AppCompatActivity() {
 
     private fun getListData(): ArrayList<Picture> {
         val list: ArrayList<Picture> = ArrayList<Picture>()
-        val album1 = Picture("Vietnam", 1)
-        val album2 = Picture("Vietnam", 2)
-        val album3 = Picture("Vietnam", 3)
-        val album4 = Picture("Vietnam", 4)
-
-        list.add(album1)
-        list.add(album2)
-        list.add(album3)
-        list.add(album4)
         return list
     }
 }

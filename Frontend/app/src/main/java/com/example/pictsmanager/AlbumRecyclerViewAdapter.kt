@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 internal class CustomRecyclerViewAdapter(
     private val context: Context,
-    private val albums: List<Album>
+    private val albums: ArrayList<Album>
 ) : RecyclerView.Adapter<AlbumViewHolder>() {
     private val mLayoutInflater: LayoutInflater
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
@@ -25,9 +25,9 @@ internal class CustomRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
-        // Cet country in countries via position
         val album = albums[position]
         holder.albumNameView.text = album.nameAlbum
+        album.isDelete = holder.albumDeleteView.isChecked
     }
 
     override fun getItemCount(): Int {
