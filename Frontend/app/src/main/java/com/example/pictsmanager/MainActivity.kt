@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
 import android.util.Log
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -72,6 +73,26 @@ class MainActivity : AppCompatActivity() {
         })
 
 
+        button_delete.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Supression")
+            builder.setMessage("Etes vous sûr de supprimer ces dossiers ?")
+            builder.setPositiveButton(
+                "OK"
+            ) { dialog, which ->
+                for(album in albums){
+                    if (album.isDelete){
+                        albums.remove(album)
+                    }
+                }
+            }
+            builder.setNegativeButton(
+                "Cancel"
+            ) { dialog, which -> dialog.cancel() }
+            builder.show()
+
+        }
+
         buttonAddAlbum.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Title")
@@ -82,7 +103,7 @@ class MainActivity : AppCompatActivity() {
                 "OK"
             ) { dialog, which ->
                 if (!input.text.toString().equals("")) {
-                    //albums?.add(Album( input.text.toString()/*, null*/))
+                    albums.add(Album(input.text.toString(), albums.size + 1, false))
                 } else {
                     Toast.makeText(this, "Sorry, you can't create a new folder with an empty name", Toast.LENGTH_SHORT).show()
                 }

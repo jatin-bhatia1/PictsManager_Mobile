@@ -2,6 +2,7 @@ package com.example.pictsmanager
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ internal class CustomRecyclerViewAdapter2(
         // Cet country in countries via position
         val picture = pictures[position]
         holder.pictureNameView.text = picture.namePicture
+        holder.pictureView.setImageBitmap(BitmapFactory.decodeByteArray(picture.codedPicture,0,picture.codedPicture.size))
     }
 
     override fun getItemCount(): Int {
@@ -37,7 +39,11 @@ internal class CustomRecyclerViewAdapter2(
     private fun handleRecyclerItemClick(recyclerView: RecyclerView, itemView: View) {
         val itemPosition = recyclerView.getChildLayoutPosition(itemView)
         val picture = pictures[itemPosition]
-        Toast.makeText(context, picture.namePicture, Toast.LENGTH_LONG).show()
+        val intent = Intent(context, EditPicture::class.java)
+        intent.putExtra("namePicture",picture.namePicture)
+        intent.putExtra("codedPicture", picture.codedPicture)
+        intent.putExtra("id",picture.id)
+        context.startActivity(intent)
     }
 
     init {

@@ -13,7 +13,7 @@ internal class CustomRecyclerViewAdapter(
     private val context: Context,
     private val albums: MutableList<Album>?
 ) : RecyclerView.Adapter<AlbumViewHolder>() {
-    private val mLayoutInflater: LayoutInflater
+    private val mLayoutInflater: LayoutInflater = LayoutInflater.from(context)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
         val recyclerViewItem = mLayoutInflater.inflate(R.layout.album_item, parent, false)
         recyclerViewItem.setOnClickListener { v ->
@@ -50,7 +50,4 @@ internal class CustomRecyclerViewAdapter(
         }
     }
 
-    init {
-        mLayoutInflater = LayoutInflater.from(context)
-    }
 }
