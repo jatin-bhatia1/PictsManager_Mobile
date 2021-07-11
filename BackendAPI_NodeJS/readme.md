@@ -19,3 +19,5 @@
 - Mobile application logins : 
     - username : 'admin@admin.com
     - password : 'moto1234'
+- Postman :
+    - To test the api with the routes, you'll have to set variable path as : 'localhost:4000'

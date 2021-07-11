@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "592b3d76-147b-4d77-85fe-b41eb0158b58",
+		"_postman_id": "97fe5670-86c9-4703-adce-e9f09ca8f182",
 		"name": "PictsManagerAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"user\": {\r\n        \"email\": \"jatin@test.fr\",\r\n        \"password\": \"jatin1234\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"email\": \"admin@admin.com\",\r\n    \"password\": \"moto1234\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -232,7 +232,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"album\": {\r\n            \"name\": \"Downloaded Images\"\r\n        }\r\n}",
+							"raw": "{\r\n    \"album\": {\r\n            \"userId\": 5,\r\n            \"name\": \"Toto Images\"\r\n        }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -277,14 +277,21 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{path}}/api/albums/2",
+							"raw": "{{path}}/api/albums/1",
 							"host": [
 								"{{path}}"
 							],
 							"path": [
 								"api",
 								"albums",
-								"2"
+								"1"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "5",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -361,6 +368,32 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "path",
+			"value": "localhost:4000"
 		}
 	]
 }
