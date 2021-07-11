@@ -11,7 +11,7 @@ import com.example.pictsmanager.models.Album
 
 internal class CustomRecyclerViewAdapter(
     private val context: Context,
-    private val albums: List<Album>
+    private val albums: MutableList<Album>?
 ) : RecyclerView.Adapter<AlbumViewHolder>() {
     private val mLayoutInflater: LayoutInflater
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
@@ -27,20 +27,27 @@ internal class CustomRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
         // Cet country in countries via position
-        val album = albums[position]
-        holder.albumNameView.text = album.Name
+        if(albums != null){
+            val album = albums[position]
+            holder.albumNameView.text = album.Name
+        }
     }
 
     override fun getItemCount(): Int {
-        return albums.size
+        if (albums != null) {
+            return albums.size
+        }
+        return 0
     }
 
     private fun handleRecyclerItemClick(recyclerView: RecyclerView, itemView: View) {
-        val itemPosition = recyclerView.getChildLayoutPosition(itemView)
-        val album = albums[itemPosition]
-        val intent = Intent(context, ListPicturesActivity::class.java)
-        intent.putExtra("nameAlbum",album.Name)
-        context.startActivity(intent)
+        if(albums != null){
+            val itemPosition = recyclerView.getChildLayoutPosition(itemView)
+            val album = albums[itemPosition]
+            val intent = Intent(context, ListPicturesActivity::class.java)
+            intent.putExtra("nameAlbum",album.Name)
+            context.startActivity(intent)
+        }
     }
 
     init {

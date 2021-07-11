@@ -29,8 +29,8 @@ exports.getById = function (req, res) {
 
 // Authenticate user
 exports.login = function (req, res) {
-    const email = req.body.user.email;
-    const password = req.body.user.password;
+    const email = req.body.email;
+    const password = req.body.password;
   
     // check empty field
     if (email == null || password == null) {
@@ -64,7 +64,7 @@ exports.login = function (req, res) {
                   maxAge: oneMonth,
                   secure: process.env.NODE_ENV === 'development' ? true : false,
                 })
-                .json({ user_id: userFound.id });
+                .json({ id: userFound.id });
             } else {
               res.status(500).json({ error: 'Password error' });
             }

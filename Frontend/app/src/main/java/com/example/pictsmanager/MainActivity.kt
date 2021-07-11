@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
+import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,40 +16,61 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pictsmanager.api.ApiClient
+import com.example.pictsmanager.api.ApiService
 import com.example.pictsmanager.models.Album
+import com.example.pictsmanager.models.User
+import com.example.pictsmanager.viewmodels.PostLoginUserViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
 
 
 private const val REQUEST_CODE = 42
 private const val CAMERA_REQUEST_CODE = 1888
+private const val BASE_URL: String = "http://10.0.2.2:4000/api/"
 
 class MainActivity : AppCompatActivity() {
-    private val albums : MutableList<Album> = getListData()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val user_id  = intent.getIntExtra("user_id", 1)
         setContentView(R.layout.activity_main)
 
 
         setUpPermissionsCamera()
+        var albums: MutableList<Album>? = null
+        val loginResponse =
+            ApiClient.apiService.getListAlbums(user_id)
+        loginResponse.enqueue(object : Callback<MutableList<Album>> {
+            override fun onResponse(call: Call<MutableList<Album>>, response: Response<MutableList<Album>>) {
+                response.body()
+                if (response.isSuccessful && response.body() != null ) {
+                    albums = response.body()
+                    recyclerView_album.adapter = CustomRecyclerViewAdapter(this@MainActivity, albums)
 
-        var albums: MutableList<Album>? = executeGetAlbums()
-        if(albums != null){
-            recyclerView_album.adapter = CustomRecyclerViewAdapter(this, albums)
-        }else{
-            albums = getListData()
-            recyclerView_album.adapter = CustomRecyclerViewAdapter(this, albums)
-        }
+                    val linearLayoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
+                    recyclerView_album.layoutManager = linearLayoutManager
+                }
+            }
 
-        val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerView_album.layoutManager = linearLayoutManager
+            override fun onFailure(call: Call<MutableList<Album>>, t: Throwable) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Wrong Username or Password !",
+                    Toast.LENGTH_LONG
+                ).show()
+                t.message?.let { Log.e("ERROR:", it) }
+            }
+        })
+
 
         buttonAddAlbum.setOnClickListener {
             val builder = AlertDialog.Builder(this)
@@ -60,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                 "OK"
             ) { dialog, which ->
                 if (!input.text.toString().equals("")) {
-                    albums.add(Album(input.text.toString(), null))
+                    //albums?.add(Album( input.text.toString()/*, null*/))
                 } else {
                     Toast.makeText(this, "Sorry, you can't create a new folder with an empty name", Toast.LENGTH_SHORT).show()
                 }
@@ -70,7 +92,6 @@ class MainActivity : AppCompatActivity() {
             ) { dialog, which -> dialog.cancel() }
             builder.show()
         }
-
 
         btnTakePicture.setOnClickListener {
             dispatchTakePictureIntent()
@@ -124,53 +145,5 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Toast.makeText(this,"Unable to open camera",Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun getListData(): MutableList<Album> {
-        val list: MutableList<Album> = ArrayList<Album>()
-        val album1 = Album("Vietnam", null)
-        val album2 = Album("Vietnam", null)
-        val album3 = Album("Vietnam", null)
-        val album4 = Album("Vietnam", null)
-
-        list.add(album1)
-        list.add(album2)
-        list.add(album3)
-        list.add(album4)
-        return list
-    }
-
-    private fun executeGetAlbums() = runBlocking {
-        var data: MutableList<Album>? = null
-        val job = launch(Dispatchers.Main) {
-            try {
-                val response = ApiClient.apiService.getListAlbums(userId = 1)
-
-                if (response.isSuccessful && response.body() != null) {
-                    data = response.body()
-                    Toast.makeText(
-                        this@MainActivity,
-                        "data: $data",
-                        Toast.LENGTH_LONG
-                    ).show()
-                } else {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Error Occurred: ${response.message()}",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-
-            } catch (e: Exception) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Error Occurred: ${e.message}",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
-        delay(1300L)
-        job.cancel()
-        return@runBlocking data
     }
 }

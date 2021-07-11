@@ -1,6 +1,6 @@
 package com.example.pictsmanager.models
 
-class Album(var Name: String, var Images: MutableList<Image>?) {
+data class Album(var id: Int, var Name: String, var UserId: Int, var createdAt: String, var updatedAt: String) {
 
     override fun toString(): String {
         return "$Name"
