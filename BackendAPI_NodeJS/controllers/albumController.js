@@ -48,7 +48,7 @@ exports.create = function (req, res) {
         .catch((err) => {
           res.status(500).json(err);
         });    
-  };
+};
 
   // Delete an album
 exports.delete = function (req, res) {
@@ -65,4 +65,4 @@ exports.delete = function (req, res) {
       .catch((err) => {
         res.status(500).json(err);
       });
-  };
+};

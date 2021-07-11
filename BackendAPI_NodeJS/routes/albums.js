@@ -7,9 +7,8 @@ const album = require('../controllers/albumController');
  * 
  * http://localhost:4000/api/albums
 */
-
-router.get('/:user_id', album.getByUser);
 router.post('/', album.create);
+router.get('/:user_id', album.getByUser);
 router.delete('/:album_id', album.delete);
 
 

@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.login.*
 class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.login)
 
         button.setOnClickListener {

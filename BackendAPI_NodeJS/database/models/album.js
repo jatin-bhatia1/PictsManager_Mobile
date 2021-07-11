@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Album.hasMany(models.Image, {
         foreignKey: 'AlbumID',
-        as: 'Image',
+        as: 'Images',
         onDelete: 'CASCADE',
       });
       Album.belongsTo(models.User, {

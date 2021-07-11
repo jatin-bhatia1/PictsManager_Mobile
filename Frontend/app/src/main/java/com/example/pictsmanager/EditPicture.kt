@@ -10,8 +10,10 @@ import kotlinx.android.synthetic.main.edit_picture.*
 class EditPicture : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.edit_picture)
         val codedPicture = intent.getByteArrayExtra("picture")
+
         if (codedPicture != null) {
             imageView.setImageBitmap(BitmapFactory.decodeByteArray(codedPicture,0,codedPicture.size))
         }else{
